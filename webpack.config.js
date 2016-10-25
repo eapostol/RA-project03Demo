@@ -28,7 +28,7 @@ const webpack = require('webpack');
 const PATHS = {
     src: join(__dirname, 'src'),
     fonts: join(__dirname, 'fonts'),
-    build: join(__dirname, 'build')
+    build: 'build'
 };
 
 // Thus the PATHS constant above can help refer to your folders.
@@ -58,7 +58,7 @@ module.exports = {
     },
     output: {
         path: process.cwd(),
-        publicPath: '/yourProjectName/',
+        publicPath: '/RA-project03Demo/',
         filename: join(PATHS.build,'bundle.js')
     },
     module: {
@@ -68,9 +68,9 @@ module.exports = {
             include: PATHS.src
         }, {
             test: /\.js$/,
-            loader: 'babel',
+            loader: 'babel-loader',
             include: PATHS.src,
-            exclude: /node_modules/
+            exclude: ['./node_modules/','webpack.config.js']
         }, {
             test: /\.(eot|svg|ttf|woff|woff2)$/,
             include : PATHS.fonts,
@@ -80,17 +80,12 @@ module.exports = {
     devtool: 'eval-source-map',
     devServer: {
         contentBase: process.cwd(),
-
         historyApiFallback: true,
-        hot: true,
         inline: true,
         progress: true,
-
-        // display only errors to reduce the amount of output
         stats: 'errors-only',
-
-        // parse host and port from env so this is easy
-        // to customize
+        aggregateTimeout: 300,
+        poll: 1000,
         host: process.env.HOST,
         port: process.env.PORT
     },
